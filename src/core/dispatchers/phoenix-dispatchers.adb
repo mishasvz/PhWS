@@ -33,15 +33,14 @@ package body Phoenix.Dispatchers is
       URI          : constant String := AWS.Status.URI (Request);
       Translations : AWS.Templates.Translate_Set;
       New_URI	   : Ada.Strings.Unbounded.Unbounded_String;
-      Position	   : Natural;
+      Position	   : Positive;
       Len	   : Natural;
       Ext	   : Ada.Strings.Unbounded.Unbounded_String;
    begin
       New_URI := Ada.Strings.Unbounded.To_Unbounded_String (URI);
       Position := Ada.Strings.Unbounded.Index (New_URI, ".");
       Len := Ada.Strings.Unbounded.Length (New_URI);
-      Ext := Ada.Strings.Unbounded.To_Unbounded_String (Ada.Strings.Unbounded.Slice(New_URI, Position, Len));
-      Ada.Text_IO.Put_Line (Ada.Strings.Unbounded.To_String(Ext));
+      Ada.Text_IO.Put_Line (Ada.Strings.Unbounded.Slice(New_URI, Position, Len));
       if URI = "/" then
          AWS.Templates.Insert
            (Translations,
