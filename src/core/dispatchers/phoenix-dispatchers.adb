@@ -33,7 +33,7 @@ package body Phoenix.Dispatchers is
       URI          : constant String := AWS.Status.URI (Request);
       Translations : AWS.Templates.Translate_Set;
       New_URI	   : Ada.Strings.Unbounded.Unbounded_String;
-      Position	   : Positive;
+      Position	   : Natural;
       Len	   : Natural;
       Ext	   : Ada.Strings.Unbounded.Unbounded_String;
    begin
