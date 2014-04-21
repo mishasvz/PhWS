@@ -1,0 +1,146 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html><head>
+  <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript"/>
+
+  <title>
+    Package: Config
+  </title>
+  <link rel='stylesheet' href='support/docgen.css' type='text/css'/>
+  <link rel='stylesheet' href='support/tags.css' type='text/css'/>
+  <script src='support/docgen.js' type='text/javascript' charset='utf-8'></script>
+</head>
+<body onload="onloadDoc();">
+
+<div id='leftSide'>
+  <div id='leftSideInside'>
+  <div id='header'>
+    <h2 class="button">Documentation</h2>
+    <a href='toc.html'><div class="button2">Table of Contents</div></a>
+
+    <a href='tree.html'><div class="button2">Class Inheritance Tree</div></a>
+
+  </div>
+
+  <div id='navigation'>
+    <h2 class="button">Navigation</h2>
+    <a href='#Description'><div class="button2">Description</div></a>
+    <a href='#Constants'><div class="button2">Constants &amp; Global variables</div></a>
+    <a href='#Methods'><div class="button2">Subprograms &amp; Entries</div></a>
+  </div><!-- navigation -->
+  </div>
+</div> <!-- leftSide -->
+
+<div class='default' id='rightSide'>
+ <div id='rightSideInside'>
+ <div id='Index'>
+  <h2>Index</h2>
+  <script type="text/javascript">
+    var names = new Array (
+new Array ('Phoenix_<wbr/>Config', 'phoenix-config.ads:13:4', 'var-spec'),
+new Array ('ConfigLog', 'phoenix-config.ads:15:4', 'var-spec'),
+new Array ('Initialize', 'phoenix-config.ads:17:14', 'subp-spec'),
+new Array ('SetupConfig', 'phoenix-config.ads:18:14', 'subp-spec'),
+new Array ('Get', 'phoenix-config.ads:19:13', 'subp-spec'),
+new Array ('Configurate', 'phoenix-config.ads:21:14', 'subp-spec'),
+      new Array ('dummy', '', ''));
+    printIndexList (names);
+  </script>
+  <noscript>
+    <ul>
+      <li class='var-spec'><a href="#phoenix-config.ads:13:4">Phoenix_<wbr/>Config</a></li>
+      <li class='var-spec'><a href="#phoenix-config.ads:15:4">ConfigLog</a></li>
+      <li class='subp-spec'><a href="#phoenix-config.ads:17:14">Initialize</a></li>
+      <li class='subp-spec'><a href="#phoenix-config.ads:18:14">SetupConfig</a></li>
+      <li class='subp-spec'><a href="#phoenix-config.ads:19:13">Get</a></li>
+      <li class='subp-spec'><a href="#phoenix-config.ads:21:14">Configurate</a></li>
+    </ul>
+  </noscript>
+ </div>
+ </div>
+</div>
+
+<div class='default' id='documentation'>
+  <div class='title'>
+    Package:
+<span class="droplink"><i>Config</i><ul>
+  <li><a href="src_phoenix-config.ads.html">Goto spec source</a></li>
+</ul></span>
+  </div>
+  <div class='subprograms'>
+    <h1><a name='Description' id='Description'></a>Description</h1>
+    <div class="class">
+    <div class='details'><pre><span class="keyword">package</span> <span class="name_emphasis">Phoenix.Config</span> <span class="keyword">is</span></pre></div>
+    </div>
+  </div>
+
+
+
+
+
+  <div class='subprograms'>
+    <h1><a name='Constants' id='Constants'></a>Constants &amp; Global variables</h1>
+    <div class="class">
+      <h3><a name='phoenix-config.ads:13:4' id='phoenix-config.ads:13:4'></a>
+<span class="droplink">Phoenix_Config<ul>
+  <li><a href="src_phoenix-config.ads.html#l13">Goto declaration in source</a></li>
+</ul></span>
+        <span class="type">(Manager)</span>
+      </h3>
+      <div class='details'><pre><span class="name_emphasis">Phoenix_Config</span> : Manager;</pre></div>
+    </div>
+    <div class="class">
+      <h3><a name='phoenix-config.ads:15:4' id='phoenix-config.ads:15:4'></a>
+<span class="droplink">ConfigLog<ul>
+  <li><a href="src_phoenix-config.ads.html#l15">Goto declaration in source</a></li>
+</ul></span>
+        <span class="type">(Logger)</span>
+      </h3>
+      <div class='details'><pre><span class="name_emphasis">ConfigLog</span> : <span class="keyword">constant</span> Logger := Create (<span class="string">"Phoenix.Config"</span>);</pre></div>
+    </div>
+  </div>
+
+    <div class='subprograms'>
+      <h1><a name='Methods' id='Methods'></a>Subprograms &amp; Entries</h1>
+      <div class="class">
+        <h3>
+          <a name='phoenix-config.ads:17:14' id='phoenix-config.ads:17:14'></a>
+<span class="droplink">Initialize<ul>
+  <li><a href="src_phoenix-config.ads.html#l17">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">procedure</span> <span class="name_emphasis">Initialize</span> <table><tr><td>(</td><td><span class="name"><a name="phoenix-config.ads:17:26"></a>Config</span></td><td>: <span class="keyword">in</span> String);</td></tr></table></pre></div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='phoenix-config.ads:18:14' id='phoenix-config.ads:18:14'></a>
+<span class="droplink">SetupConfig<ul>
+  <li><a href="src_phoenix-config.ads.html#l18">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">procedure</span> <span class="name_emphasis">SetupConfig</span> <table><tr><td>(</td><td><span class="name"><a name="phoenix-config.ads:18:27"></a>Config</span></td><td>: <span class="keyword">in</span> Manager'Class);</td></tr></table></pre></div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='phoenix-config.ads:19:13' id='phoenix-config.ads:19:13'></a>
+<span class="droplink">Get<ul>
+  <li><a href="src_phoenix-config.ads.html#l19">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">function</span> <span class="name_emphasis">Get</span> <table><tr><td>(</td><td><span class="name"><a name="phoenix-config.ads:19:18"></a>Name</span></td><td>: <span class="keyword">in</span> String;</td></tr><tr><td></td><td><span class="name"><a name="phoenix-config.ads:20:18"></a>Default</span></td><td>: <span class="keyword">in</span> String := <span class="string">""</span>) <span class="keyword">return</span> String;</td></tr></table></pre></div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='phoenix-config.ads:21:14' id='phoenix-config.ads:21:14'></a>
+<span class="droplink">Configurate<ul>
+  <li><a href="src_phoenix-config.ads.html#l21">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">procedure</span> <span class="name_emphasis">Configurate</span>;</pre></div>
+      </div>
+    </div>
+</div> <!-- documentation -->
+
+</body>
+</html>

@@ -53,11 +53,7 @@ package body Phoenix.Dispatchers is
       end loop;
       if Ext /= NeURI then
          Ada.Strings.Unbounded.Text_IO.Put_Line(Ext);
-      end if;
-
-
-
-      if URI = "/" then
+      else if URI = "/" then
          AWS.Templates.Insert
            (Translations,
             AWS.Templates.Assoc ("MESSAGE", "This is the main page"));
@@ -67,18 +63,16 @@ package body Phoenix.Dispatchers is
             String'(AWS.Templates.Parse
               (Filename     => Ada.Strings.Unbounded.To_String (Web_Root) & "/tmplt/main.thtml",
                Translations => Translations)));
-
-      else
-         if Ada.Directories.Exists(To_String (Web_Root) & URI & ".html") = true then
-            return AWS.Response.Build
-              (AWS.MIME.Text_HTML,
-               String'(AWS.Templates.Parse
-                 (Filename     => Ada.Strings.Unbounded.To_String (Web_Root) & URI & ".html",
-                  Translations => Translations)));
-         else
-	    return AWS.Response.Acknowledge (Messages.S404, "Unknown page");
+         else if Ada.Directories.Exists(To_String (Web_Root) & URI & ".html") = true then
+               return AWS.Response.Build
+                 (AWS.MIME.Text_HTML,
+                  String'(AWS.Templates.Parse
+                    (Filename     => Ada.Strings.Unbounded.To_String (Web_Root) & URI & ".html",
+                     Translations => Translations)));
+            else
+               return AWS.Response.Acknowledge (Messages.S404, "Unknown page");
+            end if;
          end if;
-
       end if;
    end Dispatch;
 
