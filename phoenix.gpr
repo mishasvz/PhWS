@@ -17,5 +17,10 @@ project Phoenix is
       for Default_Switches ("ada") use ("-gnat05");
    end Compiler;
 
+   package Ide is
+      for Vcs_Kind use "Git";
+      for Vcs_Repository_Root use "https://github.com/mishasvz/PhWS.git";
+   end Ide;
+
 end Phoenix;
 
