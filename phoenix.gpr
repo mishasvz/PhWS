@@ -1,0 +1,21 @@
+with "ado";
+with "aws";
+with "util";
+
+project Phoenix is
+
+   for Source_Dirs use ("src/**");
+   for Object_Dir use "./obj";
+   for Exec_Dir use "./build";
+   for Main use ("phoenix-main.adb");
+
+   package Builder is
+      for Executable ("phoenix-main.adb") use "phoenix";
+   end Builder;
+
+   package Compiler is
+      for Default_Switches ("ada") use ("-gnat05");
+   end Compiler;
+
+end Phoenix;
+
