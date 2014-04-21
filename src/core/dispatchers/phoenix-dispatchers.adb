@@ -1,4 +1,6 @@
 with Ada.Text_IO;
+with Ada.Strings.Unbounded.Text_IO;
+with Ada.Integer_Text_IO;
 package body Phoenix.Dispatchers is
 
    Web_Root : Ada.Strings.Unbounded.Unbounded_String;
@@ -32,15 +34,29 @@ package body Phoenix.Dispatchers is
       pragma Unreferenced (Dispatcher);
       URI          : constant String := AWS.Status.URI (Request);
       Translations : AWS.Templates.Translate_Set;
-      New_URI	   : Ada.Strings.Unbounded.Unbounded_String;
+      NeURI	   : Ada.Strings.Unbounded.Unbounded_String;
       Position	   : Positive;
       Len	   : Natural;
       Ext	   : Ada.Strings.Unbounded.Unbounded_String;
+      Exits	   : Boolean := False;
    begin
-      New_URI := Ada.Strings.Unbounded.To_Unbounded_String (URI);
-      Position := Ada.Strings.Unbounded.Index (New_URI, ".");
-      Len := Ada.Strings.Unbounded.Length (New_URI);
-      Ada.Text_IO.Put_Line (Ada.Strings.Unbounded.Slice(New_URI, Position, Len));
+      NeURI := Ada.Strings.Unbounded.To_Unbounded_String (URI);
+      Ext := NeURI;
+      loop
+         if Ada.Strings.Unbounded.Index (Ext,".") /= 0 then
+            Position := Ada.Strings.Unbounded.Index (Ext,".");
+            Len := Ada.Strings.Unbounded.Length (Ext);
+            Ext := Ada.Strings.Unbounded.To_Unbounded_String (Ada.Strings.Unbounded.Slice(Ext, Position + 1, Len));
+         else
+            exit;
+         end if;
+      end loop;
+      if Ext /= NeURI then
+         Ada.Strings.Unbounded.Text_IO.Put_Line(Ext);
+      end if;
+
+
+
       if URI = "/" then
          AWS.Templates.Insert
            (Translations,

@@ -3,4 +3,4 @@ all:
 
 clean:
 	gnat clean -P phoenix
-	rm -v ./build/log/*
+        rm -v ./build/log/*
