@@ -39,6 +39,10 @@ private
 
    function LinkPath (URI : String; typ : String) return String;
 
+   function ReturnFile
+     (Ext : Ada.Strings.Unbounded.Unbounded_String;
+      URI : Ada.Strings.Unbounded.Unbounded_String) return AWS.Response.Data;
+
    type Default is new AWS.Services.Dispatchers.URI.Handler with null record;
 
    type CSS is new  AWS.Services.Dispatchers.URI.Handler with null record;

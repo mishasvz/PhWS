@@ -57,16 +57,16 @@ procedure Phoenix.Main is
    begin
       Util.Log.Loggers.Info(Phoenix.Log,"Setup dispatchers");
       Phoenix.Dispatchers.Initialize;
-      AWS.Services.Dispatchers.URI.Register
-        (Phoenix.Web_Dispatcher,
-         URI    => "/css",
-         Action => CSS_Dispatcher,
-         Prefix => True);
-      AWS.Services.Dispatchers.URI.Register
-        (Phoenix.Web_Dispatcher,
-         URI    => "/img",
-         Action => Image_Dispatcher,
-         Prefix => True);
+--      AWS.Services.Dispatchers.URI.Register
+--        (Phoenix.Web_Dispatcher,
+--         URI    => "/css",
+--         Action => CSS_Dispatcher,
+--         Prefix => True);
+--      AWS.Services.Dispatchers.URI.Register
+--        (Phoenix.Web_Dispatcher,
+--         URI    => "/img",
+--         Action => Image_Dispatcher,
+--         Prefix => True);
       AWS.Services.Dispatchers.URI.Register
         (Phoenix.Web_Dispatcher,
          URI    => "/admin",

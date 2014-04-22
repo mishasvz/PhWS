@@ -27,6 +27,24 @@ package body Phoenix.Dispatchers is
       return Ada.Strings.Unbounded.To_String (FileS) & Ada.Strings.Unbounded.Slice (File, Position, Len);
    end LinkPath;
 
+   function ReturnFile (
+                        Ext : Ada.Strings.Unbounded.Unbounded_String;
+                        URI : Ada.Strings.Unbounded.Unbounded_String) return AWS.Response.Data is
+      typ : Ada.Strings.Unbounded.Unbounded_String;
+      File : constant String := Ada.Strings.Unbounded.To_String (Web_Root & URI);
+   begin
+      Ada.Text_IO.Put_Line(File);
+      if Ada.Directories.Exists (File) then
+         return AWS.Response.File
+           (Content_Type => AWS.MIME.Text_CSS,
+            Filename     => File);
+      else
+         return AWS.Response.Acknowledge (Messages.S404);
+      end if;
+   end ReturnFile;
+
+
+
 
    overriding function Dispatch
      (Dispatcher : in Default; Request : in AWS.Status.Data) return AWS.Response.Data
@@ -39,6 +57,8 @@ package body Phoenix.Dispatchers is
       Len	   : Natural;
       Ext	   : Ada.Strings.Unbounded.Unbounded_String;
       Exits	   : Boolean := False;
+      File	   : constant String := Ada.Strings.Unbounded.To_String (Web_Root) & URI;
+      typ	   : Ada.Strings.Unbounded.Unbounded_String;
    begin
       NeURI := Ada.Strings.Unbounded.To_Unbounded_String (URI);
       Ext := NeURI;
@@ -52,7 +72,35 @@ package body Phoenix.Dispatchers is
          end if;
       end loop;
       if Ext /= NeURI then
-         Ada.Strings.Unbounded.Text_IO.Put_Line(Ext);
+         if Ext = "css" then
+            typ := Ada.Strings.Unbounded.To_Unbounded_String(AWS.MIME.Text_CSS);
+         end if;
+         if Ext = "js" then
+            typ := Ada.Strings.Unbounded.To_Unbounded_String(AWS.MIME.Text_Javascript);
+         end if;
+         if Ext = "gif" then
+            typ := Ada.Strings.Unbounded.To_Unbounded_String(AWS.MIME.Image_Gif);
+         end if;
+         if Ext = "png" then
+            typ := Ada.Strings.Unbounded.To_Unbounded_String(AWS.MIME.Image_Png);
+         end if;
+         if Ext = "jpg" then
+            typ := Ada.Strings.Unbounded.To_Unbounded_String(AWS.MIME.Image_Jpeg);
+         end if;
+         if Ext = "jpeg" then
+            typ := Ada.Strings.Unbounded.To_Unbounded_String(AWS.MIME.Image_Jpeg);
+         end if;
+         if Ext = "ico" then
+            typ := Ada.Strings.Unbounded.To_Unbounded_String(AWS.MIME.Image_Icon);
+         end if;
+         Ada.Text_IO.Put_Line(File);
+         if Ada.Directories.Exists (File) then
+         	return AWS.Response.File(
+           		Content_Type => Ada.Strings.Unbounded.To_String(typ),
+            		Filename     => File);
+      	else
+         	return AWS.Response.Acknowledge (Messages.S404);
+      	end if;
       else if URI = "/" then
          AWS.Templates.Insert
            (Translations,
