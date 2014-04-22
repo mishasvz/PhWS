@@ -52,21 +52,9 @@ procedure Phoenix.Main is
 
    procedure SetupDispatch is
       Default_Dispatcher : Phoenix.Dispatchers.Default;
-      CSS_Dispatcher     : Phoenix.Dispatchers.CSS;
-      Image_Dispatcher   : Phoenix.Dispatchers.Image;
    begin
       Util.Log.Loggers.Info(Phoenix.Log,"Setup dispatchers");
       Phoenix.Dispatchers.Initialize;
---      AWS.Services.Dispatchers.URI.Register
---        (Phoenix.Web_Dispatcher,
---         URI    => "/css",
---         Action => CSS_Dispatcher,
---         Prefix => True);
---      AWS.Services.Dispatchers.URI.Register
---        (Phoenix.Web_Dispatcher,
---         URI    => "/img",
---         Action => Image_Dispatcher,
---         Prefix => True);
       AWS.Services.Dispatchers.URI.Register
         (Phoenix.Web_Dispatcher,
          URI    => "/admin",
