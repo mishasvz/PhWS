@@ -3,9 +3,13 @@ with AWS.Config;
 with AWS.Services.Dispatchers.URI;
 
 with Phoenix;
+with Phoenix.App;
+with Phoenix.SQL;
 with Phoenix.Admin;
 with Phoenix.Config;
 with Phoenix.Dispatchers;
+with Phoenix.App.Controller;
+with Phoenix.App.Controller.Main;
 
 with Util.Log.loggers;
 
@@ -19,6 +23,7 @@ procedure Phoenix.Main is
    procedure RunLog;
    procedure ReadConfig(Name : String);
    procedure SetupDispatch;
+   procedure RunSQL;
 
    procedure Start is
    begin
@@ -27,6 +32,7 @@ procedure Phoenix.Main is
                        Dispatcher => Phoenix.Web_Dispatcher,
                        Config     => Phoenix.Web_Config);
       Util.Log.Loggers.Info(Phoenix.Log,"Start Phoenix Web Server");
+      RunSQL;
       AWS.Server.Wait(AWS.Server.Q_Key_Pressed);
       Stop;
    end Start;
@@ -60,10 +66,21 @@ procedure Phoenix.Main is
          URI    => "/admin",
          Action => Phoenix.Admin.Get'Access,
          Prefix => True);
+      AWS.Services.Dispatchers.URI.Register
+        (Phoenix.Web_Dispatcher,
+         URI	=> "/main",
+         Action	=> Phoenix.App.Controller.Main.Start'Access,
+         Prefix	=> True);
       AWS.Services.Dispatchers.URI.Register_Default_Callback
         (Phoenix.Web_Dispatcher,
          Action => Default_Dispatcher);
    end SetupDispatch;
+
+   procedure RunSQL is
+   begin
+      Phoenix.SQL.Connect;
+   end RunSQL;
+
 
 begin
    if Ada.Command_Line.Argument_Count /= 0 then

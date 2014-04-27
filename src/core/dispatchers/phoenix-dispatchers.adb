@@ -1,7 +1,3 @@
-with Ada.Text_IO;
-with Ada.Strings.Unbounded.Text_IO;
-with Ada.Integer_Text_IO;
-
 package body Phoenix.Dispatchers is
 
    Web_Root : Ada.Strings.Unbounded.Unbounded_String;
@@ -15,7 +11,6 @@ package body Phoenix.Dispatchers is
       Ext	   : String := AWS.MIME.Content_Type(URI);
       File	   : constant String := Ada.Strings.Unbounded.To_String (Web_Root) & URI;
    begin
-      Ada.Text_IO.Put_Line(Ext);
       if Ext /= "application/octet-stream" then
          if Ada.Directories.Exists (File) then
             return AWS.Response.File(Content_Type => Ext, Filename => File);

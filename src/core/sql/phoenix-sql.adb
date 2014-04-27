@@ -2,7 +2,7 @@ package body Phoenix.SQL is
 
    procedure Connect is
    begin
-      ADO.Drivers.Initialize ("mysql.conf");
+      ADO.Drivers.Initialize (Phoenix.CommandLine(1));
       Factory.Create (ADO.Drivers.Get_Config ("ado.database"));
 
       DB := Factory.Get_Master_Session;
