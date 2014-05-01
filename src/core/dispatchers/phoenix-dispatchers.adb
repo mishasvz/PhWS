@@ -1,40 +1,40 @@
 package body Phoenix.Dispatchers is
 
-   Web_Root : Ada.Strings.Unbounded.Unbounded_String;
+   Web_Root : Unbounded_String;
 
    overriding function Dispatch
      (Dispatcher : in Default; Request : in AWS.Status.Data) return AWS.Response.Data
    is
       pragma Unreferenced (Dispatcher);
       URI          : constant String := AWS.Status.URI (Request);
-      Translations : AWS.Templates.Translate_Set;
+      Translations : Translate_Set;
       Ext	   : String := AWS.MIME.Content_Type(URI);
-      File	   : constant String := Ada.Strings.Unbounded.To_String (Web_Root) & URI;
+      File	   : constant String := To_String (Web_Root) & URI;
    begin
       if Ext /= "application/octet-stream" then
-         if Ada.Directories.Exists (File) then
+         if Exists (File) then
             return AWS.Response.File(Content_Type => Ext, Filename => File);
          else
-            return AWS.Response.Acknowledge (Messages.S404, "Unknown page");
+            return Acknowledge (S404, "Unknown page");
          end if;
       else if URI = "/" then
-         AWS.Templates.Insert
+         Insert
            (Translations,
-            AWS.Templates.Assoc ("MESSAGE", "This is the main page"));
+            Assoc ("MESSAGE", "This is the main page"));
 
-         return AWS.Response.Build
-           (AWS.MIME.Text_HTML,
-            String'(AWS.Templates.Parse
-              (Filename     => Ada.Strings.Unbounded.To_String (Web_Root) & "/tmplt/main.thtml",
+         return Build
+           (Text_HTML,
+            String'(Parse
+              (Filename     => To_String (Web_Root) & "/tmplt/main.thtml",
                Translations => Translations)));
-         else if Ada.Directories.Exists(To_String (Web_Root) & URI & ".html") = true then
-               return AWS.Response.Build
-                 (AWS.MIME.Text_HTML,
-                  String'(AWS.Templates.Parse
-                    (Filename     => Ada.Strings.Unbounded.To_String (Web_Root) & URI & ".html",
+         else if Exists(To_String (Web_Root) & URI & ".html") = true then
+               return Build
+                 (Text_HTML,
+                  String'(Parse
+                    (Filename     => To_String (Web_Root) & URI & ".html",
                      Translations => Translations)));
             else
-               return AWS.Response.Acknowledge (Messages.S404, "Unknown page");
+               return Acknowledge (S404, "Unknown page");
             end if;
          end if;
       end if;
@@ -42,7 +42,7 @@ package body Phoenix.Dispatchers is
 
    procedure Initialize is
    begin
-      Web_Root := Ada.Strings.Unbounded.To_Unbounded_String (Phoenix.Config.Get ("phoenix.www_root"));
+      Web_Root := To_Unbounded_String (Phoenix.Config.Get ("phoenix.www_root"));
    end Initialize;
 
 end Phoenix.Dispatchers;

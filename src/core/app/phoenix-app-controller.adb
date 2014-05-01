@@ -1,12 +1,21 @@
 package body Phoenix.App.Controller is
 
-   function Render(File : String; Translation : AWS.Templates.Translate_Set) return AWS.Response.Data is
+   function Render(File 	: String;
+                   Translation 	: Translate_Set;
+                   Title	: String := Get("phoenix.app.title")) return Data is
+      Data 		  : Unbounded_String;
+      Translations_Head   : Translate_Set;
+      Translations_Footer : Translate_Set;
    begin
-      return AWS.Response.Build
-        (AWS.MIME.Text_HTML,
-         String'(AWS.Templates.Parse
-           (Filename          => Phoenix.Config.Get ("phoenix.www_root") & "/views/" & File,
-            Translations      => Translation)));
+      Insert
+           (Translations_Head,
+            Assoc ("TITLE", Title));
+
+      Data := Data & To_Unbounded_String(Parse(Get("phoenix.www_root") & "/views/layouts/head.tmplt", Translations_Head));
+      Data := Data & To_Unbounded_String(Parse(Get ("phoenix.www_root") & "/views/" & File, Translation));
+      Data := Data & To_Unbounded_String(Parse(Get("phoenix.www_root") & "/views/layouts/footer.tmplt", Translations_Footer));
+
+      return Build(Text_HTML, To_String(Data));
    end Render;
 
 

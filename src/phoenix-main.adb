@@ -1,6 +1,9 @@
-with AWS.Server;
+with Ada.Text_IO;			use Ada.Text_IO;
+with Ada.Command_Line;			use Ada.Command_Line;
+
+with AWS.Server;			use AWS.Server;
 with AWS.Config;
-with AWS.Services.Dispatchers.URI;
+with AWS.Services.Dispatchers.URI;	use AWS.Services.Dispatchers.URI;
 
 with Phoenix;
 with Phoenix.App;
@@ -11,10 +14,7 @@ with Phoenix.Dispatchers;
 with Phoenix.App.Controller;
 with Phoenix.App.Controller.Main;
 
-with Util.Log.loggers;
-
-with Ada.Text_IO;
-with Ada.Command_Line;
+with Util.Log.loggers;			use Util.Log.Loggers;
 
 procedure Phoenix.Main is
 
@@ -28,30 +28,28 @@ procedure Phoenix.Main is
    procedure Start is
    begin
       SetupDispatch;
-      AWS.Server.Start(Web_Server => Phoenix.Web_Server,
-                       Dispatcher => Phoenix.Web_Dispatcher,
-                       Config     => Phoenix.Web_Config);
-      Util.Log.Loggers.Info(Phoenix.Log,"Start Phoenix Web Server");
+      Start(Phoenix.Web_Server, Phoenix.Web_Dispatcher, Phoenix.Web_Config);
+      Info(Phoenix.Log,"Start Phoenix Web Server");
       RunSQL;
-      AWS.Server.Wait(AWS.Server.Q_Key_Pressed);
+      Wait(AWS.Server.Q_Key_Pressed);
       Stop;
    end Start;
 
    procedure Stop is
    begin
-      AWS.Server.Shutdown(Phoenix.Web_Server);
-      Util.Log.Loggers.Info(Phoenix.Log,"Stop Phoenix Web Server");
+      Shutdown(Phoenix.Web_Server);
+      Info(Phoenix.Log,"Stop Phoenix Web Server");
    end Stop;
 
    procedure RunLog is
    begin
-      Util.Log.Loggers.Initialize(Phoenix.CommandLine(1));
-      Util.Log.Loggers.Info(Phoenix.Log,"Start logging");
+      Initialize(CommandLine(1));
+      Info(Phoenix.Log,"Start logging");
    end RunLog;
 
    procedure ReadConfig(Name : String) is
    begin
-      Util.Log.Loggers.Info(Phoenix.Log,"Read server config file");
+      Info(Phoenix.Log,"Read server config file");
       Phoenix.Config.Initialize(Name);
       Phoenix.Config.Configurate;
    end ReadConfig;
@@ -59,21 +57,11 @@ procedure Phoenix.Main is
    procedure SetupDispatch is
       Default_Dispatcher : Phoenix.Dispatchers.Default;
    begin
-      Util.Log.Loggers.Info(Phoenix.Log,"Setup dispatchers");
+      Info(Phoenix.Log,"Setup dispatchers");
       Phoenix.Dispatchers.Initialize;
-      AWS.Services.Dispatchers.URI.Register
-        (Phoenix.Web_Dispatcher,
-         URI    => "/admin",
-         Action => Phoenix.Admin.Get'Access,
-         Prefix => True);
-      AWS.Services.Dispatchers.URI.Register
-        (Phoenix.Web_Dispatcher,
-         URI	=> "/main",
-         Action	=> Phoenix.App.Controller.Main.Start'Access,
-         Prefix	=> True);
-      AWS.Services.Dispatchers.URI.Register_Default_Callback
-        (Phoenix.Web_Dispatcher,
-         Action => Default_Dispatcher);
+      Register(Phoenix.Web_Dispatcher, "/admin", Phoenix.Admin.Get'Access, True);
+      Register(Phoenix.Web_Dispatcher, "/main", Phoenix.App.Controller.Main.Start'Access, True);
+      Register_Default_Callback(Phoenix.Web_Dispatcher, Default_Dispatcher);
    end SetupDispatch;
 
    procedure RunSQL is
@@ -83,16 +71,16 @@ procedure Phoenix.Main is
 
 
 begin
-   if Ada.Command_Line.Argument_Count /= 0 then
+   if Argument_Count /= 0 then
       ReadConfig(Phoenix.CommandLine(1));
       RunLog;
       Start;
    else
-      Ada.Text_IO.Put_Line(" -------------------------------------------------------------- ");
-      Ada.Text_IO.Put_Line("|      Phoenix Web Server based on Ada Web Server v" & AWS.Version & "      |");
-      Ada.Text_IO.Put_Line("|   For running web-server please run command from superuser   |");
-      Ada.Text_IO.Put_Line("|      ~# ./phoenix -c:<name config file with extensions>      |");
-      Ada.Text_IO.Put_Line("| Development by Misha Serenkov (http://vk.com/misha_serenkov) |");
-      Ada.Text_IO.Put_Line(" -------------------------------------------------------------- ");
+      Put_Line(" -------------------------------------------------------------- ");
+      Put_Line("|      Phoenix Web Server based on Ada Web Server v" & AWS.Version & "      |");
+      Put_Line("|   For running web-server please run command from superuser   |");
+      Put_Line("|      ~# ./phoenix -c:<name config file with extensions>      |");
+      Put_Line("| Development by Misha Serenkov (http://vk.com/misha_serenkov) |");
+      Put_Line(" -------------------------------------------------------------- ");
    end if;
 end Phoenix.Main;

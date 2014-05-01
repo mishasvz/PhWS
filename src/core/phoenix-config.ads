@@ -4,7 +4,7 @@ with Phoenix.Utils.Converter;		use Phoenix.Utils.Converter;
 with Util.Properties;			use Util.Properties;
 with Util.Log.Loggers;			use Util.Log.Loggers;
 
-with Ada.IO_Exceptions;
+with Ada.IO_Exceptions;			use Ada.IO_Exceptions;
 
 with AWS.Config.Set;
 
